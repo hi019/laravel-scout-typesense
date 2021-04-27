@@ -1,6 +1,6 @@
 <?php
 
-namespace Devloops\LaravelTypesense;
+namespace hi019\LaravelTypesense;
 
 use Typesense\Client;
 use Typesense\Document;
@@ -9,13 +9,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use Typesense\Exceptions\ObjectNotFound;
 use Typesense\Exceptions\TypesenseClientError;
 
-/**
- * Class Typesense
- *
- * @package Devloops\LaravelTypesense
- * @date    4/5/20
- * @author  Abdullah Al-Faqeir <abdullah@devloops.net>
- */
 class Typesense
 {
 
@@ -43,7 +36,7 @@ class Typesense
     }
 
     /**
-     * @param   \Illuminate\Database\Eloquent\Model|\Devloops\LaravelTypesense\Interfaces\TypesenseSearch  $model
+     * @param   \Illuminate\Database\Eloquent\Model|\hi019\LaravelTypesense\Interfaces\TypesenseSearch  $model
      *
      * @return \Typesense\Collection
      * @throws \Typesense\Exceptions\TypesenseClientError

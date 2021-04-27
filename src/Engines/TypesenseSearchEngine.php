@@ -1,23 +1,17 @@
 <?php
 
-namespace Devloops\LaravelTypesense\Engines;
+namespace hi019\LaravelTypesense\Engines;
 
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Devloops\LaravelTypesense\Typesense;
+use hi019\LaravelTypesense\Typesense;
 use GuzzleHttp\Exception\GuzzleException;
 use Typesense\Exceptions\ObjectNotFound;
 use Typesense\Exceptions\TypesenseClientError;
 
-/**
- * Class TypesenseSearchEngine
- *
- * @package Devloops\LaravelTypesense\Engines
- * @date    4/5/20
- * @author  Abdullah Al-Faqeir <abdullah@devloops.net>
- */
+
 class TypesenseSearchEngine extends Engine
 {
 

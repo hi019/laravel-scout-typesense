@@ -1,12 +1,7 @@
 <?php
 
-namespace Devloops\LaravelTypesense\Interfaces;
+namespace hi019\LaravelTypesense\Interfaces;
 
-/**
- * Interface TypesenseSearch
- *
- * @package Devloops\LaravelTypesense\Interfaces
- */
 interface TypesenseSearch
 {
 
