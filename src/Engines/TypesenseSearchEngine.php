@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use hi019\LaravelTypesense\Typesense;
-use Typesense\Exceptions\ObjectNotFound;
 
 
 class TypesenseSearchEngine extends Engine
