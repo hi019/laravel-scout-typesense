@@ -2,7 +2,7 @@
 
 namespace hi019\LaravelTypesense;
 
-use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Foundation\Application;
 use Typesense\Client;
 use Laravel\Scout\EngineManager;
 use Illuminate\Support\ServiceProvider;
@@ -34,7 +34,7 @@ class TypesenseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app[EngineManager::class]->extend(
-          'typesense', function (App $app) {
+          'typesense', function (Application $app) {
               return new TypesenseSearchEngine(new Typesense($app->make(Client::class)), config('scout.soft_delete'));
           }
         );
