@@ -108,6 +108,10 @@ class Typesense
         $document->delete();
     }
 
+    public function deleteDocuments(Collection $collectionIndex, $documentIds) {
+        $collectionIndex->getDocuments()->delete($documentIds);
+    }
+
     public function importDocuments(Collection $collectionIndex, $documents) {
         $collectionIndex->getDocuments()->import($documents);
     }

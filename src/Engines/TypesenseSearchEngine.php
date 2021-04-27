@@ -50,20 +50,9 @@ class TypesenseSearchEngine extends Engine
      */
     public function delete($models): void
     {
-        $models->each(
-          function (Model $model) {
-              $collectionIndex = $this->typesense->getCollectionIndex($model);
+        $collection = $this->typesense->getCollectionIndex($models->first()->searchableAs());
 
-              try {
-                  $this->typesense->deleteDocument(
-                    $collectionIndex,
-                    $model->getScoutKey()
-                  );
-              } catch (ObjectNotFound $e) {
-                  // Don't need to do anything here. The object wasn't found anyway, so nothing to delete!
-              }
-          }
-        );
+        $this->typesense->deleteDocuments($collection, $models->map->getScoutKey()->values()->all());
     }
 
     /**
