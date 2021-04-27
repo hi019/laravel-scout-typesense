@@ -2,7 +2,7 @@
 
 namespace hi019\LaravelTypesense\Interfaces;
 
-interface TypesenseSearch
+interface TypesenseModel
 {
 
     public function typesenseQueryBy(): array;

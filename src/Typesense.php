@@ -36,7 +36,7 @@ class Typesense
     }
 
     /**
-     * @param   \Illuminate\Database\Eloquent\Model|\hi019\LaravelTypesense\Interfaces\TypesenseSearch  $model
+     * @param   \Illuminate\Database\Eloquent\Model|\hi019\LaravelTypesense\Interfaces\TypesenseModel  $model
      *
      * @return \Typesense\Collection
      * @throws \Typesense\Exceptions\TypesenseClientError
@@ -108,4 +108,7 @@ class Typesense
         $document->delete();
     }
 
+    public function importDocuments(Collection $collectionIndex, $documents) {
+        $collectionIndex->getDocuments()->import($documents);
+    }
 }

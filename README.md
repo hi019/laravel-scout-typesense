@@ -45,7 +45,7 @@ Ensure you have Laravel Scout as a provider too otherwise you will get an "unres
 ],
 ```
 
-Add  `SCOUT_DRIVER=typesensesearch` to your `.env` file
+Add  `SCOUT_DRIVER=typesense` to your `.env` file
 
 Then you should publish `scout.php` configuration file to your config directory
 
@@ -57,7 +57,7 @@ In your `config/scout.php` add:
 
 ```php
 
-'typesensesearch' => [
+'typesense' => [
     'api_key'         => 'abcd',
     'nodes'           => [
       [
@@ -84,7 +84,7 @@ In your `config/scout.php` add:
 
 After you have installed scout and the Typesense driver, you need to add the
 `Searchable` trait to your models that you want to make searchable. Additionaly,
-define the fields you want to make searchable by defining the `toSearchableArray` method on the model and implement `TypesenseSearch`:
+define the fields you want to make searchable by defining the `toSearchableArray` method on the model and implement `TypesenseModel`:
 
 ```php
 <?php
@@ -92,10 +92,10 @@ define the fields you want to make searchable by defining the `toSearchableArray
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use hi019\LaravelTypesense\Interfaces\TypesenseSearch;
+use hi019\LaravelTypesense\Interfaces\TypesenseModel;
 use Laravel\Scout\Searchable;
 
-class Post extends Model implements TypesenseSearch
+class Post extends Model implements TypesenseModel
 {
     use Searchable;
 

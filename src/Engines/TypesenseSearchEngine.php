@@ -2,29 +2,31 @@
 
 namespace hi019\LaravelTypesense\Engines;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use hi019\LaravelTypesense\Typesense;
-use GuzzleHttp\Exception\GuzzleException;
 use Typesense\Exceptions\ObjectNotFound;
-use Typesense\Exceptions\TypesenseClientError;
 
 
 class TypesenseSearchEngine extends Engine
 {
 
-    private $typesense;
+    protected $typesense;
+
+    protected $softDelete;
 
     /**
      * TypesenseSearchEngine constructor.
      *
      * @param $typesense
      */
-    public function __construct(Typesense $typesense)
+    public function __construct(Typesense $typesense, bool $softDelete)
     {
         $this->typesense = $typesense;
+        $this->softDelete = $softDelete;
     }
 
     /**
@@ -32,15 +34,15 @@ class TypesenseSearchEngine extends Engine
      */
     public function update($models): void
     {
-        $models->each(
-          function (Model $model) {
-              $array = $model->toSearchableArray();
+        $collection = $this->typesense->getCollectionIndex($models->first()->searchableAs());
 
-              $collectionIndex = $this->typesense->getCollectionIndex($model);
+        if ($this->usesSoftDelete($models->first()) && $this->softDelete) {
+            $models->each->pushSoftDeleteMetadata();
+        }
 
-              $this->typesense->upsertDocument($collectionIndex, $array);
-          }
-        );
+        $this->typesense->importDocuments($collection, $models->map(function ($m) {
+            return $m->searchableAs();
+        }));
     }
 
     /**
@@ -192,4 +194,15 @@ class TypesenseSearchEngine extends Engine
         $collection->delete();
     }
 
+    /**
+     * Determine if the given model uses soft deletes.
+     * From https://github.com/laravel/scout/blob/7fb1c860a2fd904f0e084a7cc3641eb1448ba278/src/Engines/AlgoliaEngine.php#L228
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return bool
+     */
+    protected function usesSoftDelete($model)
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive($model));
+    }
 }
