@@ -8,10 +8,8 @@ use Laravel\Scout\Engines\Engine;
 use Illuminate\Support\Collection;
 use hi019\LaravelTypesense\Typesense;
 
-
 class TypesenseSearchEngine extends Engine
 {
-
     protected $typesense;
 
     protected $softDelete;
@@ -32,15 +30,15 @@ class TypesenseSearchEngine extends Engine
      */
     public function update($models): void
     {
-        $collection = $this->typesense->getCollectionIndex($models->first()->searchableAs());
+        $collection = $this->typesense->getCollectionIndex($models->first());
 
         if ($this->usesSoftDelete($models->first()) && $this->softDelete) {
             $models->each->pushSoftDeleteMetadata();
         }
 
         $this->typesense->importDocuments($collection, $models->map(function ($m) {
-            return $m->searchableAs();
-        }));
+            return $m->toSearchableArray();
+        })->toArray());
     }
 
     /**
@@ -59,9 +57,9 @@ class TypesenseSearchEngine extends Engine
     public function search(Builder $builder)
     {
         return $this->performSearch(
-          $builder,
-          array_filter(
-            [
+            $builder,
+            array_filter(
+              [
               'q'        => $builder->query,
               'query_by' => implode(',', $builder->model->typesenseQueryBy()),
               'filter_by' => $this->filters($builder),
@@ -105,14 +103,14 @@ class TypesenseSearchEngine extends Engine
           $this->typesense->getCollectionIndex($builder->model)->getDocuments();
         if ($builder->callback) {
             return call_user_func(
-              $builder->callback,
-              $documents,
-              $builder->query,
-              $options
+                $builder->callback,
+                $documents,
+                $builder->query,
+                $options
             );
         }
         return $documents->search(
-          $options
+            $options
         );
     }
 
@@ -124,7 +122,7 @@ class TypesenseSearchEngine extends Engine
     protected function filters(Builder $builder): string
     {
         return collect($builder->wheres)->map(
-          static function ($value, $key) {
+            static function ($value, $key) {
               return $key . ':=' . $value;
           }
         )->values()->implode(' && ');
@@ -151,14 +149,14 @@ class TypesenseSearchEngine extends Engine
           collect($results['hits'])->pluck('document.id')->values()->all();
         $objectIdPositions = array_flip($objectIds);
         return $model->getScoutModelsByIds(
-          $builder,
-          $objectIds
+            $builder,
+            $objectIds
         )->filter(
-          static function ($model) use ($objectIds) {
+            static function ($model) use ($objectIds) {
               return in_array($model->getScoutKey(), $objectIds, false);
           }
         )->sortBy(
-          static function ($model) use ($objectIdPositions) {
+            static function ($model) use ($objectIdPositions) {
               return $objectIdPositions[$model->getScoutKey()];
           }
         )->values();

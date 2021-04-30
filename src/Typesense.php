@@ -108,11 +108,13 @@ class Typesense
         $document->delete();
     }
 
-    public function deleteDocuments(Collection $collectionIndex, $documentIds) {
+    public function deleteDocuments(Collection $collectionIndex, $documentIds)
+    {
         $collectionIndex->getDocuments()->delete($documentIds);
     }
 
-    public function importDocuments(Collection $collectionIndex, $documents) {
-        $collectionIndex->getDocuments()->import($documents);
+    public function importDocuments(Collection $collectionIndex, $documents, $action = 'upsert')
+    {
+        $collectionIndex->getDocuments()->import($documents, ['action' => $action]);
     }
 }
