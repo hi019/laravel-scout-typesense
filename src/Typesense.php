@@ -108,9 +108,9 @@ class Typesense
         $document->delete();
     }
 
-    public function deleteDocuments(Collection $collectionIndex, $documentIds)
+    public function deleteDocuments(Collection $collectionIndex, array $query)
     {
-        $collectionIndex->getDocuments()->delete($documentIds);
+        $collectionIndex->getDocuments()->delete($query);
     }
 
     public function importDocuments(Collection $collectionIndex, $documents, $action = 'upsert')
