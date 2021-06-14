@@ -7,13 +7,12 @@
     "search"
   ],
   "type": "library",
-  "homepage": "https://www.devloops.net",
+  "homepage": "https://github.com/hi019/laravel-scout-typesense",
   "license": "MIT",
   "authors": [
     {
-      "name": "Abdullah Al-Faqeir",
-      "email": "abdullah@devloops.net",
-      "homepage": "https://www.devloops.net",
+      "name": "hi019",
+      "homepage": "https://github.com/hi019",
       "role": "Developer"
     }
   ],
