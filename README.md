@@ -1,6 +1,7 @@
 *This is a fork of https://github.com/devloopsnet/laravel-scout-typesense-engine*
 
 # Use https://github.com/typesense/laravel-scout-typesense-engine instead!
+This repository is now deprecated. Most of its features are implemented in the official Scout Typesense engine linked above. 
 
 # Laravel Scout Typesense Engine
 Typesense engine for laravel/scout https://github.com/typesense/typesense .
@@ -23,9 +24,7 @@ This package makes it easy to add full text search support to your models with L
 
 You can install the package via composer:
 
-``` bash
-composer require hi019/laravel-scout-typesense
-```
+
 
 Add the service provider:
 
