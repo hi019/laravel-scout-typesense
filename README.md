@@ -1,5 +1,7 @@
 *This is a fork of https://github.com/devloopsnet/laravel-scout-typesense-engine*
 
+# Use https://github.com/typesense/laravel-scout-typesense-engine instead!
+
 # Laravel Scout Typesense Engine
 Typesense engine for laravel/scout https://github.com/typesense/typesense .
 
